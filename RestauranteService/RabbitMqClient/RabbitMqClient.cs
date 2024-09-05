@@ -16,8 +16,8 @@ namespace RestauranteService.RabbitMqClient
             _configuration = configuration;
             _connection = new ConnectionFactory()
             {
-                HostName = _configuration["RabbitMqHost"],
-                Port = Int32.Parse(_configuration["RabbitMqPort"])
+                HostName = _configuration["RabbitMQHost"],
+                Port = Int32.Parse(_configuration["RabbitMQPort"])
             }.CreateConnection();
             _channel = _connection.CreateModel();
             _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
@@ -25,9 +25,12 @@ namespace RestauranteService.RabbitMqClient
 
         public void PublicaRestaurante(RestauranteReadDto restauranteReadDto)
         {
+            Console.WriteLine(restauranteReadDto);
             var mensagem = JsonSerializer.Serialize(restauranteReadDto);
             var body = Encoding.UTF8.GetBytes(mensagem);
 
+            Console.WriteLine(body.ToString());
+            Console.WriteLine(mensagem);
             _channel.BasicPublish(
                 exchange: "trigger", 
                 routingKey: "", 

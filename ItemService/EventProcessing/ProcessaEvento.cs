@@ -23,11 +23,13 @@ namespace ItemService.EventProcessing
 
             var itemRepository = scope.ServiceProvider.GetRequiredService<IItemRepository>();
 
-            var restaurantePublishedDto = JsonSerializer.Deserialize<RestaurantePublishedDto>(mensagemParaConsumir);
+            var restauranteReadDto = JsonSerializer.Deserialize<RestauranteReadDto>(mensagemParaConsumir);
 
-            var restaurante = _mapper.Map<Restaurante>(restaurantePublishedDto);
+            var restaurante = _mapper.Map<Restaurante>(restauranteReadDto);
 
-            if (!itemRepository.ExisteRestauranteExterno(restaurante.IdExterno))
+            Console.WriteLine("restaurante", restaurante);
+
+            if (!itemRepository.ExisteRestauranteExterno(restaurante.Id))
             {
                 itemRepository.CreateRestaurante(restaurante);
                 itemRepository.SaveChanges();

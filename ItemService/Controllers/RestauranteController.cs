@@ -34,10 +34,4 @@ public class RestauranteController : ControllerBase
 
         return Ok();
     }
-
-    [HttpPost]
-    public IActionResult TestInboundConnection()
-    {
-        return Ok("Conexão ok!");
-    }
 }

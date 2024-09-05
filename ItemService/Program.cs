@@ -1,6 +1,6 @@
-using ItemService.AsyncDataServices;
 using ItemService.Data;
 using ItemService.EventProcessing;
+using ItemService.RabbitMqClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -16,7 +16,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("InMemoryDatabase"));
 builder.Services.AddScoped<IItemRepository, ItemRepository>();
-builder.Services.AddHostedService<MessageBusSubscriber>();
+builder.Services.AddHostedService<RabbitMqSubscriber>();
 builder.Services.AddSingleton<IProcessaEvento, ProcessaEvento>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen(c =>
